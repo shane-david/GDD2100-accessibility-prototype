@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections; 
 using System.Collections.Generic; 
+using UnityEngine.UI; 
 
 public class InputVisualGenerator : MonoBehaviour
 {
@@ -56,6 +57,7 @@ public class InputVisualGenerator : MonoBehaviour
     private void StartLull()
     {   
         _badPresses = 0; 
+        _goodPresses = 0; 
         InputHandler.OnRegisteredInput += CheckDecoyInput; 
         float lullTime = Random.Range(_minLullTime, _maxLullTime); 
         StartCoroutine(Lull(lullTime)); 
@@ -113,15 +115,18 @@ public class InputVisualGenerator : MonoBehaviour
 
         // if the decoy input is equal to the input destroy the decoy, if it is not add to the bad press counter 
         if (_decoy.inputId == input)
-        {
-            Destroy(_decoyObject);
+        {   
+            _decoyObject.GetComponent<Image>().color = Color.green; 
+            Destroy(_decoyObject, 0.2f);
             _decoy = null; 
             _decoySpawned = false; 
             _goodPresses++; 
-        } else
-        {
+        } else { 
+            _decoyObject.GetComponent<Image>().color = Color.red;
+            Destroy(_decoyObject, 0.2f); 
+            _decoy = null; 
+            _decoySpawned = false; 
             _badPresses++; 
-            Debug.Log($"Bad Press, you have {_badPresses} bad presses!"); 
         }
     }
 
@@ -136,12 +141,17 @@ public class InputVisualGenerator : MonoBehaviour
 
             // compare the inputs and return if they are not the same 
             if (collectedInputs[i] != _generatedInputs[i]) {
+                _inputLayout.transform.GetChild(i).GetComponent<Image>().color = new Color(0.0f, 1.0f, 0.0f, 1.0f); 
                 EndCatch("lose"); 
                 return; 
+            
+            // if they are the same make that instance green 
+            } else {
+                _inputLayout.transform.GetChild(i).GetComponent<Image>().color = new Color(0.0f, 1.0f, 0.0f, 1.0f); 
             }
         }
 
-        // if we mad it out of the loop the inputs are an exact match so far and if the sizes are the same the player wins
+        // if we made it out of the loop the inputs are an exact match so far and if the sizes are the same the player wins
         if (collectedInputs.Count == _generatedInputs.Count) {
             EndCatch("win"); 
         }
@@ -152,6 +162,9 @@ public class InputVisualGenerator : MonoBehaviour
         // start feeding input into input collector instead of this 
         _inputCollector.Initialize(); 
         InputHandler.OnRegisteredInput -= CheckDecoyInput; 
+
+        // spawn the bite text
+        GameManager.Instance.StarBite(); 
 
         // destroy any decoys
         if (_decoyObject != null)
@@ -168,6 +181,7 @@ public class InputVisualGenerator : MonoBehaviour
         int randomInputs = Random.Range(_minInputs, _maxInputs+1); 
         randomInputs += _badPresses; 
         randomInputs -= _goodPresses; 
+        Debug.Log(randomInputs); 
         randomInputs = Mathf.Clamp(randomInputs, _minInputs, _inputCeiling); 
 
         // spawn that many inputs
@@ -190,12 +204,27 @@ public class InputVisualGenerator : MonoBehaviour
 
     private IEnumerator DestroyImages(float delay, string type)
     {
+
+        // turn every image red to indicate failure if there was failure
+        if (type == "lose") {
+            foreach (Transform child in _inputLayout.transform)
+            {
+                Image image = child.GetComponent<Image>(); 
+                if (image != null)
+                {
+                    image.color = Color.red; 
+                }
+            }
+        }
+
         yield return new WaitForSeconds(delay); 
 
         foreach (Transform child in _inputLayout.transform)
         {
             Destroy(child.gameObject); 
         }
+
+        Debug.Log(type); 
 
         // handle the proper transition 
         if (type == "win") {

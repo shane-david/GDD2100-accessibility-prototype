@@ -5,4 +5,5 @@ public class PressableSO : ScriptableObject
 {
     public GameObject buttonPrefab; 
     public InputNames inputId; 
+
 }
