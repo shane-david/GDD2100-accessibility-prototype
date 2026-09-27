@@ -30,6 +30,14 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject); 
     }
 
+    private void OnEnable() => InputHandler.OnPauseInput += Pause; 
+    private void OnDisable() => InputHandler.OnPauseInput -= Pause; 
+
+    private void Pause()
+    {
+        OptionsMenuHandler.Instance.Show(); 
+    }
+
     public void FailCatch()
     {
         _visualGenerator.enabled = false; 

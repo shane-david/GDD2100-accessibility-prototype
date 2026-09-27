@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class StartMenuHandler : MonoBehaviour
 {
+
     public void StartGame()
     {
         SceneManager.LoadScene("game");
@@ -10,7 +11,7 @@ public class StartMenuHandler : MonoBehaviour
 
     public void OpenOptions()
     {
-        Debug.Log("opened optoins");
+        OptionsMenuHandler.Instance.Show(); 
     }
 
     public void QuitGame()
