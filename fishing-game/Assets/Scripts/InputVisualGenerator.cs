@@ -52,6 +52,7 @@ public class InputVisualGenerator : MonoBehaviour
     private void OnDisable()
     {
         InputCollector.OnInputCollected -= CheckInputs;
+        InputHandler.OnRegisteredInput -= CheckDecoyInput; 
     }
 
     private void StartLull()
