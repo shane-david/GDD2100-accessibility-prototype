@@ -7,11 +7,12 @@ Waterside Quest is a simple fishing game developed in Unity to showcase accessib
 - Keyboard/Controller input
 - Basic UI
 - Finished Game Loop
-- Input randomizer system 
+- Input randomizer system
+- Difficulty Settings
+- Interactive Tutorial
 
 ## Future Additions
-- Finish accessibility features: Narrator, one hand mode, difficulty...
-- Adjust UI scaling
+- Finish accessibility features: Narrator, one hand mode...
 - Inventory/Rewards for catching
 - Higher contrasts UI/graphics
 - More descriptive/immersive sounds 
