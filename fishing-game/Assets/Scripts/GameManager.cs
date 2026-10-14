@@ -1,4 +1,5 @@
 using UnityEngine;
+using System; 
 using TMPro; 
 
 // game manager is a singleton that will handele all of the transitions
@@ -14,6 +15,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _castBar; 
     [SerializeField] private GameObject _rodImage; 
     [SerializeField] private TextMeshProUGUI _stageText; 
+    [SerializeField] private GameObject _tutorialPanel; 
+
+    public bool _tutorialActive = false; 
+
+
 
     // make singleton
     public static GameManager Instance { get; private set; }
@@ -30,9 +36,26 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject); 
     }
 
+    private void Start()
+    {
+        if (_tutorialActive) {
+            _tutorialPanel.SetActive(true);
+            _tutorialPanel.GetComponent<TutorialHandler>().enabled = true; 
+            EventHandler.InvokeTutorialEvent(0); 
+        }
+    }
+
     private void OnEnable() => InputHandler.OnPauseInput += Pause; 
     private void OnDisable() => InputHandler.OnPauseInput -= Pause; 
 
+    public void ActivateTutorial()
+    {
+        _tutorialActive = true; 
+        _tutorialPanel.SetActive(true);
+        _tutorialPanel.GetComponent<TutorialHandler>().enabled = true; 
+        EventHandler.InvokeTutorialEvent(0); 
+    }
+    
     private void Pause()
     {
         OptionsMenuHandler.Instance.Show(); 
@@ -44,6 +67,7 @@ public class GameManager : MonoBehaviour
         _restartButton.SetActive(true); 
         _rodImage.SetActive(false); 
         _stageText.text = "You lost it!"; 
+        if (_tutorialActive) EventHandler.InvokeTutorialEvent(3);
     }
 
     public void SucceedCatch()
@@ -51,7 +75,8 @@ public class GameManager : MonoBehaviour
         _visualGenerator.enabled = false; 
         _restartButton.SetActive(true); 
         _rodImage.SetActive(false); 
-        _stageText.text = "You caught it!";  
+        _stageText.text = "You caught it!"; 
+        if (_tutorialActive) EventHandler.InvokeTutorialEvent(3);
     }
 
     public void StartCast()
@@ -59,6 +84,7 @@ public class GameManager : MonoBehaviour
         _restartButton.SetActive(false);  
         _castBar.SetActive(true); 
         _stageText.enabled = false; 
+        if (_tutorialActive) EventHandler.InvokeTutorialEvent(4); 
     }
     
     public void FinishCast()
@@ -66,6 +92,7 @@ public class GameManager : MonoBehaviour
         _castBar.SetActive(false); 
         _visualGenerator.enabled = true; 
         _rodImage.SetActive(true); 
+        if (_tutorialActive) EventHandler.InvokeTutorialEvent(1); 
     }
 
     public void StarBite()

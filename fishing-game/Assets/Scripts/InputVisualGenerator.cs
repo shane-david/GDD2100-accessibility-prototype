@@ -29,6 +29,7 @@ public class InputVisualGenerator : MonoBehaviour
     private int _badPresses; 
     private int _goodPresses; 
     private GameObject _decoyObject; 
+    private bool _tutorialLull = false; 
 
     private void Awake()
     {
@@ -45,7 +46,14 @@ public class InputVisualGenerator : MonoBehaviour
     // subscribe/unsubscribe for both this object and the input collector
     private void OnEnable()
     {   
-        StartLull(); 
+        // only start the lull on enable if the tutorial is not active
+        if (!GameManager.Instance._tutorialActive)
+        {
+            StartLull(); 
+        } else {
+            StartTutorialLull(); 
+        }
+        
         InputCollector.OnInputCollected += CheckInputs;
     }
 
@@ -57,12 +65,43 @@ public class InputVisualGenerator : MonoBehaviour
 
     private void StartLull()
     {   
+        Debug.Log("lull started"); 
         _badPresses = 0; 
         _goodPresses = 0; 
         InputHandler.OnRegisteredInput += CheckDecoyInput; 
         float lullTime = Random.Range(_minLullTime, _maxLullTime); 
         StartCoroutine(Lull(lullTime)); 
     }
+
+    private void StartTutorialLull()
+    {   
+        _tutorialLull = true; 
+
+        // pick a random input 
+        int randomInputRNG = Random.Range(0, _possibleInputs.Count); 
+        _decoy = _possibleInputs[randomInputRNG]; 
+        _decoyObject = Instantiate(_decoy.buttonPrefab, _lullLeft.transform);
+        _decoySpawned = true; 
+
+        // subscribe to input checking 
+        InputHandler.OnRegisteredInput += CheckDecoyInput; 
+    }
+
+    private void EndTutorialLull()
+    {   
+        _tutorialLull = false; 
+
+        // unsubscribe so that StartLull can execute normally
+        InputHandler.OnRegisteredInput -= CheckDecoyInput; 
+
+        // broadcast a wait event to the Tutorialhandler
+        EventHandler.InvokeTutorialEvent(-1); 
+
+        // start the normal lull 
+        StartLull(); 
+        
+    }
+
     private IEnumerator Lull(float duration)
     {   
 
@@ -129,6 +168,12 @@ public class InputVisualGenerator : MonoBehaviour
             _decoySpawned = false; 
             _badPresses++; 
         }
+
+        // if this is the tutorial decoy input go to the next phase 
+        if (_tutorialLull)
+        {
+            EndTutorialLull(); 
+        }
     }
 
     private void CheckInputs(List<InputNames> collectedInputs)
@@ -160,6 +205,12 @@ public class InputVisualGenerator : MonoBehaviour
 
     private void GenerateInputs()
     {   
+        // broadcast the tutorial event if the tutorial is active
+        if (GameManager.Instance._tutorialActive)
+        {
+            EventHandler.InvokeTutorialEvent(2); 
+        }
+        
         // start feeding input into input collector instead of this 
         _inputCollector.Initialize(); 
         InputHandler.OnRegisteredInput -= CheckDecoyInput; 
