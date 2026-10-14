@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections; 
 using System.Collections.Generic; 
 using UnityEngine.UI; 
+using TMPro; 
 
 public class InputVisualGenerator : MonoBehaviour
 {
@@ -20,6 +21,15 @@ public class InputVisualGenerator : MonoBehaviour
     [SerializeField] private int _minInputs;
     [SerializeField] private int _maxInputs; 
 
+    [Header("Timer Values")]
+    [SerializeField] private float _easyTime;
+    [SerializeField] private float _mediumTime;
+    [SerializeField] private float _hardTime;
+    private float _timePerInput; 
+    [SerializeField] private GameObject _timerObject; 
+    private Coroutine _catchCountDown; 
+
+    [Header("Input Values")]
     [SerializeField] private List<PressableSO> _possibleInputs = new(); 
 
     private List<InputNames> _generatedInputs = new(); 
@@ -41,6 +51,10 @@ public class InputVisualGenerator : MonoBehaviour
 
         // create and the input collector
         _inputCollector = new();
+
+        // set difficulty 
+        SetDifficulty(); 
+        EventHandler.OnDifficultyChange += SetDifficulty; 
     }
 
     // subscribe/unsubscribe for both this object and the input collector
@@ -61,6 +75,30 @@ public class InputVisualGenerator : MonoBehaviour
     {
         InputCollector.OnInputCollected -= CheckInputs;
         InputHandler.OnRegisteredInput -= CheckDecoyInput; 
+    }
+
+    private void OnDestroy()
+    {
+        EventHandler.OnDifficultyChange -= SetDifficulty; 
+    }
+
+    // set the timer based on the games difficulty 
+    private void SetDifficulty()
+    {
+        switch (GameSettings.difficulty)
+        {
+            case "Easy":
+                _timePerInput = _easyTime;
+                break;
+            case "Medium":
+                _timePerInput = _mediumTime;
+                break;
+            case "Hard":
+                _timePerInput = _hardTime;
+                break; 
+        }
+
+        Debug.Log(_timePerInput); 
     }
 
     private void StartLull()
@@ -203,6 +241,17 @@ public class InputVisualGenerator : MonoBehaviour
         }
     }
 
+    // if we are checking final the timer ran out before the player pressed all inputs so make them red and end the catch
+    private void CheckInputsFinal()
+    {
+        for (int i = 0; i < _generatedInputs.Count; i++)
+        {
+            _inputLayout.transform.GetChild(i).GetComponent<Image>().color = Color.red; 
+        }
+
+        EndCatch("lose"); 
+    }
+
     private void GenerateInputs()
     {   
         // broadcast the tutorial event if the tutorial is active
@@ -245,11 +294,51 @@ public class InputVisualGenerator : MonoBehaviour
             _generatedInputs.Add(_possibleInputs[randomInputIndex].inputId); 
         }
 
+        // start timer coroutine if it is not the tutorial
+        if (!GameManager.Instance._tutorialActive) {
+            _catchCountDown = StartCoroutine(CatchCountDown(randomInputs));
+        }  
+    }
+
+    // timer coroutine, count down from input time (based on difficulty) * # of inputs and fail when at end 
+    private IEnumerator CatchCountDown(int numInputs)
+    {   
+        // calculate the total time remaining 
+        float timeRemaining = numInputs * _timePerInput; 
+
+        // active the text object and get text component 
+        _timerObject.SetActive(true); 
+        TextMeshProUGUI timerText = _timerObject.GetComponentInChildren<TextMeshProUGUI>(); 
+
+        // count down 
+        while (timeRemaining > 0)
+        {
+            // format the text 
+            timerText.text = timeRemaining.ToString("F1"); 
+
+            // substract the time passed since last frame
+            timeRemaining -= Time.deltaTime; 
+
+            // wait until the next frame until looping agon
+            yield return null; 
+        }
+
+        // once the timer is over disable the object and check inputs 
+        _timerObject.SetActive(false); 
+        CheckInputsFinal(); 
     }
 
     // when we end a catch we need to disable the visual generator and clean up our inputs then let the Game Manage deal with the transitions 
     private void EndCatch(string type)
     {   
+        // if the coroutine is still happening terminate it 
+        if (_catchCountDown != null)
+        {
+            StopCoroutine(_catchCountDown);
+            _catchCountDown = null; 
+            _timerObject.SetActive(false); 
+        }
+
         _inputCollector.Destroy(); 
         StartCoroutine(DestroyImages(2f, type)); 
     }
