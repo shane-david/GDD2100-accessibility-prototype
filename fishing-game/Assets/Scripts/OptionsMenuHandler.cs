@@ -1,12 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI; 
 using TMPro; 
+using UnityEngine.SceneManagement; 
 
 public class OptionsMenuHandler : MonoBehaviour
 {
     
     [SerializeField] TMP_Dropdown _peripheralDropdown; 
+    [SerializeField] TMP_Dropdown _difficultyDropdown; 
     [SerializeField] GameObject _menuPanel; 
+    [SerializeField] GameObject _tutorialButton; 
 
     // make singleton
     public static OptionsMenuHandler Instance { get; private set; }
@@ -21,17 +24,38 @@ public class OptionsMenuHandler : MonoBehaviour
 
         Instance = this; 
         DontDestroyOnLoad(gameObject); 
+
+        SceneManager.sceneLoaded += OnFishingSceneLoaded; 
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            SceneManager.sceneLoaded -= OnFishingSceneLoaded; 
+        }
+    }
+
+    // when the fishing scene is loaded, show the tutorial button 
+    private void OnFishingSceneLoaded(Scene scene, LoadSceneMode mode)  
+    {
+        if (scene.name == "game")
+        {
+            _tutorialButton.SetActive(true); 
+        }
     }
 
     // subscribe and unsubscribe from the dropdown changed evernts
     private void OnEnable()
     {
         _peripheralDropdown.onValueChanged.AddListener(ChangePeripheral); 
+        _difficultyDropdown.onValueChanged.AddListener(ChangeDifficulty);
     }
 
     private void OnDisable()
     {
         _peripheralDropdown.onValueChanged.RemoveListener(ChangePeripheral); 
+        _difficultyDropdown.onValueChanged.RemoveListener(ChangeDifficulty);
     }
 
     // destroy option
@@ -47,8 +71,22 @@ public class OptionsMenuHandler : MonoBehaviour
         GameSettings.peripheralType = option; 
     }
 
+    public void ChangeDifficulty(int index)
+    {
+        string option = _difficultyDropdown.options[index].text;
+        Debug.Log(option);
+        GameSettings.difficulty = option; 
+        EventHandler.InvokeDifficultyChange(); 
+    }
+
     public void Show()
     {
         _menuPanel.SetActive(true); 
+    }
+
+    public void TutorialSceneButton()
+    {
+        GameManager.Instance.ActivateTutorial(); 
+        CloseOptions(); 
     }
 }
