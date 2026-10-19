@@ -11,6 +11,8 @@ public class InputVisualGenerator : MonoBehaviour
     [SerializeField] private GameObject _inputLayout; 
     [SerializeField] private GameObject _lullRight;
     [SerializeField] private GameObject _lullLeft; 
+    [SerializeField] private GameObject _badInput; 
+    [SerializeField] private GameObject _goodInput; 
 
     [Header("RNG Values")]
     [SerializeField] private float _maxLullTime; 
