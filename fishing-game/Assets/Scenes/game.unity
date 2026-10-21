@@ -2585,6 +2585,8 @@ MonoBehaviour:
   _inputLayout: {fileID: 2099627106}
   _lullRight: {fileID: 1487368920}
   _lullLeft: {fileID: 1011496760}
+  _badInput: {fileID: 3568212066963553253, guid: 784a6b6aa8eba374db8113060b429997, type: 3}
+  _goodInput: {fileID: 7628786331572141736, guid: 0d9c7117f6962144c9788ca789fbc620, type: 3}
   _maxLullTime: 20
   _minLullTime: 10
   _rollChance: 3

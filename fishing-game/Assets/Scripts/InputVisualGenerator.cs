@@ -11,6 +11,8 @@ public class InputVisualGenerator : MonoBehaviour
     [SerializeField] private GameObject _inputLayout; 
     [SerializeField] private GameObject _lullRight;
     [SerializeField] private GameObject _lullLeft; 
+    [SerializeField] private GameObject _badInput; 
+    [SerializeField] private GameObject _goodInput; 
 
     [Header("RNG Values")]
     [SerializeField] private float _maxLullTime; 
@@ -195,12 +197,14 @@ public class InputVisualGenerator : MonoBehaviour
         if (_decoy.inputId == input)
         {   
             _decoyObject.GetComponent<Image>().color = Color.green; 
+            Instantiate(_goodInput, _decoyObject.transform);
             Destroy(_decoyObject, 0.2f);
             _decoy = null; 
             _decoySpawned = false; 
             _goodPresses++; 
         } else { 
             _decoyObject.GetComponent<Image>().color = Color.red;
+            Instantiate(_badInput, _decoyObject.transform);
             Destroy(_decoyObject, 0.2f); 
             _decoy = null; 
             _decoySpawned = false; 
@@ -226,12 +230,14 @@ public class InputVisualGenerator : MonoBehaviour
             // compare the inputs and return if they are not the same 
             if (collectedInputs[i] != _generatedInputs[i]) {
                 _inputLayout.transform.GetChild(i).GetComponent<Image>().color = new Color(0.0f, 1.0f, 0.0f, 1.0f); 
+                Instantiate(_badInput, _inputLayout.transform.GetChild(i).transform);
                 EndCatch("lose"); 
                 return; 
             
             // if they are the same make that instance green 
             } else {
                 _inputLayout.transform.GetChild(i).GetComponent<Image>().color = new Color(0.0f, 1.0f, 0.0f, 1.0f); 
+                Instantiate(_goodInput, _inputLayout.transform.GetChild(i).transform);
             }
         }
 
@@ -354,6 +360,7 @@ public class InputVisualGenerator : MonoBehaviour
                 if (image != null)
                 {
                     image.color = Color.red; 
+                    Instantiate(_badInput, child); 
                 }
             }
         }
