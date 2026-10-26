@@ -109,9 +109,6 @@ public class OptionsMenuHandler : IScaleable
     // interface methods
     public override void ChangeScale(char scale)
     {   
-        // log what the scale is changing to 
-        Debug.Log($"Changing scale to {scale}"); 
-
         // switch the scale of the total transform based on the values set in inspector 
         switch (scale)
         {

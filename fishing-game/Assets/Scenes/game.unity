@@ -2582,15 +2582,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c45324478b3f89142a6f8531e626ba82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputVisualGenerator
+  _scale1: {x: 0.5, y: 0.5}
+  _scale2: {x: 1, y: 1}
+  _scale3: {x: 1.5, y: 1.5}
   _inputLayout: {fileID: 2099627106}
   _lullRight: {fileID: 1487368920}
   _lullLeft: {fileID: 1011496760}
   _badInput: {fileID: 3568212066963553253, guid: 784a6b6aa8eba374db8113060b429997, type: 3}
   _goodInput: {fileID: 7628786331572141736, guid: 0d9c7117f6962144c9788ca789fbc620, type: 3}
+  _layoutGroup: {fileID: 0}
   _maxLullTime: 20
   _minLullTime: 10
   _rollChance: 3
-  _inputCeiling: 18
+  _inputCeiling: 11
   _minInputs: 4
   _maxInputs: 10
   _easyTime: 1.5
@@ -2858,8 +2862,8 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 2146478044}
-  - {fileID: 80764840}
   - {fileID: 546962702}
   - {fileID: 251319358}
   - {fileID: 553544577}
   - {fileID: 1063742002}
+  - {fileID: 80764840}

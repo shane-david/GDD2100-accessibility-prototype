@@ -2,9 +2,10 @@ using UnityEngine;
 using System.Collections; 
 using System.Collections.Generic; 
 using UnityEngine.UI; 
-using TMPro; 
+using TMPro;
 
-public class InputVisualGenerator : MonoBehaviour
+[RequireComponent(typeof(HorizontalLayoutGroup))]
+public class InputVisualGenerator : IScaleable
 {
 
     [Header("UI References")]
@@ -13,6 +14,7 @@ public class InputVisualGenerator : MonoBehaviour
     [SerializeField] private GameObject _lullLeft; 
     [SerializeField] private GameObject _badInput; 
     [SerializeField] private GameObject _goodInput; 
+    private HorizontalLayoutGroup _layoutGroup; 
 
     [Header("RNG Values")]
     [SerializeField] private float _maxLullTime; 
@@ -42,6 +44,7 @@ public class InputVisualGenerator : MonoBehaviour
     private int _goodPresses; 
     private GameObject _decoyObject; 
     private bool _tutorialLull = false; 
+    private Vector2 _buttonScale = new Vector2(1f, 1f); 
 
     private void Awake()
     {
@@ -53,6 +56,9 @@ public class InputVisualGenerator : MonoBehaviour
 
         // create and the input collector
         _inputCollector = new();
+
+        // cache the layout group
+        _layoutGroup = GetComponent<HorizontalLayoutGroup>(); 
 
         // set difficulty 
         SetDifficulty(); 
@@ -69,14 +75,19 @@ public class InputVisualGenerator : MonoBehaviour
         } else {
             StartTutorialLull(); 
         }
+
+        // make sure to change the scale on enable if it is set while this script is not enabled
+        ChangeScale(GameSettings.guiScale); 
         
         InputCollector.OnInputCollected += CheckInputs;
+        EventHandler.OnScaleChange += ChangeScale; 
     }
 
     private void OnDisable()
     {
         InputCollector.OnInputCollected -= CheckInputs;
         InputHandler.OnRegisteredInput -= CheckDecoyInput; 
+        EventHandler.OnScaleChange -= ChangeScale; 
     }
 
     private void OnDestroy()
@@ -87,6 +98,7 @@ public class InputVisualGenerator : MonoBehaviour
     // set the timer based on the games difficulty 
     private void SetDifficulty()
     {
+        Debug.Log("chaning size"); 
         switch (GameSettings.difficulty)
         {
             case "Easy":
@@ -101,6 +113,28 @@ public class InputVisualGenerator : MonoBehaviour
         }
 
         Debug.Log(_timePerInput); 
+    }
+
+    public override void ChangeScale(char scale)
+    {
+        // switch the scale of the total transform based on the values set in inspector 
+        switch (scale)
+        {
+            case '1':
+                _buttonScale = _scale1; 
+                _layoutGroup.spacing = -40; 
+                break;
+            case '2':
+                _buttonScale = _scale2; 
+                _layoutGroup.spacing = 30; 
+                break; 
+            case '3':
+                _buttonScale = _scale3;
+                _layoutGroup.spacing = 68; 
+                break; 
+            default:
+                break; 
+        }
     }
 
     private void StartLull()
@@ -121,6 +155,7 @@ public class InputVisualGenerator : MonoBehaviour
         int randomInputRNG = Random.Range(0, _possibleInputs.Count); 
         _decoy = _possibleInputs[randomInputRNG]; 
         _decoyObject = Instantiate(_decoy.buttonPrefab, _lullLeft.transform);
+        _decoyObject.transform.localScale = _buttonScale; 
         _decoySpawned = true; 
 
         // subscribe to input checking 
@@ -180,8 +215,10 @@ public class InputVisualGenerator : MonoBehaviour
         int leftOrRight = Random.Range(0,2);
         if (leftOrRight == 0) {
             _decoyObject = Instantiate(_decoy.buttonPrefab, _lullLeft.transform); 
+            _decoyObject.transform.localScale = _buttonScale; 
         } else if (leftOrRight == 1) {
             _decoyObject = Instantiate(_decoy.buttonPrefab, _lullRight.transform); 
+            _decoyObject.transform.localScale = _buttonScale; 
         }
 
         // set the var
@@ -296,7 +333,8 @@ public class InputVisualGenerator : MonoBehaviour
         {
             // get random input 
             int randomInputIndex = Random.Range(0, _possibleInputs.Count);
-            Instantiate(_possibleInputs[randomInputIndex].buttonPrefab, _inputLayout.transform); 
+            GameObject inputObject = Instantiate(_possibleInputs[randomInputIndex].buttonPrefab, _inputLayout.transform); 
+            inputObject.transform.localScale = _buttonScale; 
             _generatedInputs.Add(_possibleInputs[randomInputIndex].inputId); 
         }
 
