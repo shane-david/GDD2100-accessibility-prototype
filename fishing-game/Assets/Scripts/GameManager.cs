@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _restartButton; 
     [SerializeField] private GameObject _castBar; 
     [SerializeField] private GameObject _rodImage; 
-    [SerializeField] private TextMeshProUGUI _stageText; 
+    [SerializeField] private GameObject _stagePanel; 
     [SerializeField] private GameObject _tutorialPanel; 
 
     public bool _tutorialActive = false; 
@@ -66,7 +66,8 @@ public class GameManager : MonoBehaviour
         _visualGenerator.enabled = false; 
         _restartButton.SetActive(true); 
         _rodImage.SetActive(false); 
-        _stageText.text = "You lost it!"; 
+        _stagePanel.SetActive(true); 
+        _stagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "You lost it!"; 
         if (_tutorialActive) EventHandler.InvokeTutorialEvent(3);
     }
 
@@ -75,7 +76,8 @@ public class GameManager : MonoBehaviour
         _visualGenerator.enabled = false; 
         _restartButton.SetActive(true); 
         _rodImage.SetActive(false); 
-        _stageText.text = "You caught it!"; 
+        _stagePanel.SetActive(true); 
+        _stagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "You caught it!"; 
         if (_tutorialActive) EventHandler.InvokeTutorialEvent(3);
     }
 
@@ -83,7 +85,7 @@ public class GameManager : MonoBehaviour
     {
         _restartButton.SetActive(false);  
         _castBar.SetActive(true); 
-        _stageText.enabled = false; 
+        _stagePanel.SetActive(false); 
         if (_tutorialActive) EventHandler.InvokeTutorialEvent(4); 
     }
     
@@ -97,7 +99,7 @@ public class GameManager : MonoBehaviour
 
     public void StarBite()
     {
-        _stageText.enabled = true; 
-        _stageText.text = "You got a bite!"; 
+        _stagePanel.SetActive(true); 
+        _stagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "You got a bite!"; 
     }
 }
