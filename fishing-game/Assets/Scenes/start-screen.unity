@@ -824,7 +824,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 79.99994, y: -0.11997986}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1022235957
@@ -955,11 +955,11 @@ RectTransform:
   - {fileID: 450017520}
   m_Father: {fileID: 1347935526}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 79.99994, y: -55.949997}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
-  m_Pivot: {x: 0, y: 0.5}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &1064146497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1064,6 +1064,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1347935526}
   - component: {fileID: 1347935527}
+  - component: {fileID: 1347935528}
   m_Layer: 5
   m_Name: menu
   m_TagString: Untagged
@@ -1080,7 +1081,7 @@ RectTransform:
   m_GameObject: {fileID: 1347935525}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.87, y: 2.87, z: 2.87}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1618699199}
@@ -1090,8 +1091,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -211.39996, y: 19.150024}
-  m_SizeDelta: {x: 159.99997, y: 141.90001}
+  m_AnchoredPosition: {x: 0, y: 19.150024}
+  m_SizeDelta: {x: 178.78, y: 141.9}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1347935527
 MonoBehaviour:
@@ -1105,6 +1106,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6e69845f72dc8048aff4acb2dca0de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StartMenuHandler
+--- !u!114 &1347935528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347935525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19f127baca54d2a4a8b9897dcf74bd01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StandardScaler
+  _scale1: {x: 2.5, y: 2.5}
+  _scale2: {x: 3, y: 3}
+  _scale3: {x: 3.5, y: 3.5}
 --- !u!1001 &1558379906
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1113,6 +1129,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 942794020354209847, guid: 97028d13e1fa4e6408fc7a660d186d27, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.9999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 942794020354209847, guid: 97028d13e1fa4e6408fc7a660d186d27, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.9999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 942794020354209847, guid: 97028d13e1fa4e6408fc7a660d186d27, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.9999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 1060026502557201954, guid: 97028d13e1fa4e6408fc7a660d186d27, type: 3}
+      propertyPath: _scale1.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1060026502557201954, guid: 97028d13e1fa4e6408fc7a660d186d27, type: 3}
+      propertyPath: _scale1.y
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1153090648234911052, guid: 97028d13e1fa4e6408fc7a660d186d27, type: 3}
       propertyPath: m_Name
       value: settings-popup
@@ -1377,11 +1413,11 @@ RectTransform:
   - {fileID: 863295362}
   m_Father: {fileID: 1347935526}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 79.99994, y: 55.950005}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
-  m_Pivot: {x: 0, y: 0.5}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &1618699200
 MonoBehaviour:
   m_ObjectHideFlags: 0

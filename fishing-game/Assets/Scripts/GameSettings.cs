@@ -3,4 +3,5 @@ public static class GameSettings
 {
     public static string peripheralType = "Keyboard"; 
     public static string difficulty = "Easy"; 
+    public static char guiScale = '2'; 
 }
