@@ -37,8 +37,12 @@ public class InputHandler : MonoBehaviour
     private void InputPoll()
     {   
 
-        // alwayd do escape for a pause input
+        // alwayd do escape or start for a pause input
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            OnPauseInput?.Invoke(); 
+        }
+        if (Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame)
         {
             OnPauseInput?.Invoke(); 
         }

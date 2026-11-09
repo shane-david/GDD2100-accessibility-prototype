@@ -12,6 +12,8 @@ public class StartMenuHandler : MonoBehaviour
     public void OpenOptions()
     {
         OptionsMenuHandler.Instance.Show(); 
+        Debug.Log("here"); 
+        GetComponent<UIControl>().enabled = false; 
     }
 
     public void QuitGame()

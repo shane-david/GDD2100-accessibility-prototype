@@ -14,6 +14,7 @@ public class OptionsMenuHandler : IScaleable
     [SerializeField] private GameObject _menuPanel; 
     [SerializeField] private GameObject _tutorialButton; 
     [SerializeField] private RectTransform _totalTransform; 
+    [SerializeField] private UIControl _startMenu; 
 
     // make singleton
     public static OptionsMenuHandler Instance { get; private set; }
@@ -68,12 +69,13 @@ public class OptionsMenuHandler : IScaleable
     public void CloseOptions()
     {
         _menuPanel.SetActive(false); 
+        if (_startMenu != null) _startMenu.enabled = true; 
     }
 
     public void ChangePeripheral(int index)
     {
         string option = _peripheralDropdown.options[index].text; 
-        Debug.Log(option);
+        Debug.Log($"Changed to {option} peripheral!"); 
         GameSettings.peripheralType = option; 
     }
 
