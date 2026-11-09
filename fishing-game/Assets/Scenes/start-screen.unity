@@ -273,6 +273,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &406873361 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7050285255648131986, guid: 97028d13e1fa4e6408fc7a660d186d27, type: 3}
+  m_PrefabInstance: {fileID: 1558379906}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &406873363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406873361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16050ebaa041c544cacc58dd74738873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIControl
+  _deadzone: 0.5
+  _repeatDelay: 0.25
 --- !u!1 &425375948
 GameObject:
   m_ObjectHideFlags: 0
@@ -849,9 +868,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.827451, g: 0.827451, b: 0.827451, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.827451, g: 0.827451, b: 0.827451, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -982,9 +1001,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.827451, g: 0.827451, b: 0.827451, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.827451, g: 0.827451, b: 0.827451, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1065,6 +1084,7 @@ GameObject:
   - component: {fileID: 1347935526}
   - component: {fileID: 1347935527}
   - component: {fileID: 1347935528}
+  - component: {fileID: 1347935529}
   m_Layer: 5
   m_Name: menu
   m_TagString: Untagged
@@ -1121,6 +1141,20 @@ MonoBehaviour:
   _scale1: {x: 2.5, y: 2.5}
   _scale2: {x: 3, y: 3}
   _scale3: {x: 3.5, y: 3.5}
+--- !u!114 &1347935529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347935525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16050ebaa041c544cacc58dd74738873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIControl
+  _deadzone: 0.5
+  _repeatDelay: 0.25
 --- !u!1001 &1558379906
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1149,6 +1183,10 @@ PrefabInstance:
       propertyPath: _scale1.y
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1060026502557201954, guid: 97028d13e1fa4e6408fc7a660d186d27, type: 3}
+      propertyPath: _startMenu
+      value: 
+      objectReference: {fileID: 1347935529}
     - target: {fileID: 1153090648234911052, guid: 97028d13e1fa4e6408fc7a660d186d27, type: 3}
       propertyPath: m_Name
       value: settings-popup
@@ -1238,9 +1276,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8243146141729068515, guid: 97028d13e1fa4e6408fc7a660d186d27, type: 3}
+    - {fileID: 2094384280205726587, guid: 97028d13e1fa4e6408fc7a660d186d27, type: 3}
+    - {fileID: 1136702233597503401, guid: 97028d13e1fa4e6408fc7a660d186d27, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1153090648234911052, guid: 97028d13e1fa4e6408fc7a660d186d27, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1965387699}
+    - targetCorrespondingSourceObject: {fileID: 7050285255648131986, guid: 97028d13e1fa4e6408fc7a660d186d27, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 406873363}
   m_SourcePrefab: {fileID: 100100000, guid: 97028d13e1fa4e6408fc7a660d186d27, type: 3}
 --- !u!1 &1597722042
 GameObject:
@@ -1440,9 +1487,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.8274511, g: 0.8274511, b: 0.8274511, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.827451, g: 0.827451, b: 0.827451, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1512,6 +1559,64 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1618699198}
   m_CullTransparentMesh: 1
+--- !u!1 &1965387698 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1153090648234911052, guid: 97028d13e1fa4e6408fc7a660d186d27, type: 3}
+  m_PrefabInstance: {fileID: 1558379906}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1965387699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965387698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33cffec964e49a240a65aa7648c326e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GamepadConnectionEvents
+  onGamepadConnected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1965387700}
+        m_TargetAssemblyTypeName: OptionsMenuHandler, Assembly-CSharp
+        m_MethodName: ChangePeripheral
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onGamepadDisconnected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1965387700}
+        m_TargetAssemblyTypeName: OptionsMenuHandler, Assembly-CSharp
+        m_MethodName: ChangePeripheral
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1965387700 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1060026502557201954, guid: 97028d13e1fa4e6408fc7a660d186d27, type: 3}
+  m_PrefabInstance: {fileID: 1558379906}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965387698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e69a83f5c2c88354cb5dae6e143ed8ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OptionsMenuHandler
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

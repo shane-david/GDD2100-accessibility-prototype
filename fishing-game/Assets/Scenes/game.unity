@@ -1409,6 +1409,7 @@ GameObject:
   - component: {fileID: 1257955449}
   - component: {fileID: 1257955448}
   - component: {fileID: 1257955451}
+  - component: {fileID: 1257955452}
   m_Layer: 5
   m_Name: restart_button
   m_TagString: Untagged
@@ -1545,6 +1546,20 @@ MonoBehaviour:
   _scale1: {x: 1.5, y: 1.5}
   _scale2: {x: 2, y: 2}
   _scale3: {x: 3, y: 3}
+--- !u!114 &1257955452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257955446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16050ebaa041c544cacc58dd74738873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIControl
+  _deadzone: 0.5
+  _repeatDelay: 0.25
 --- !u!1 &1360127670
 GameObject:
   m_ObjectHideFlags: 0
