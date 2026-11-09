@@ -50,7 +50,8 @@ public class UIControl : MonoBehaviour
     // sense for and resolve controller input 
     void Update()
     {
-        PollInput(); 
+        PollGamepadInput(); 
+        PollKeyInput(); 
     }
 
     // private helpers
@@ -111,7 +112,7 @@ public class UIControl : MonoBehaviour
         Select(); 
     }
 
-    private void PollInput()
+    private void PollGamepadInput()
     {
         // get the current game pad, do nothing if it does not exist
         Gamepad controller = Gamepad.current; 
@@ -150,6 +151,32 @@ public class UIControl : MonoBehaviour
 
         // if the south button was pressed, click the button 
         if (controller.buttonSouth.wasPressedThisFrame && Time.frameCount > _enabledFrame)
+        {
+            switch (_items[_index])
+            {
+                case Button b : b.onClick.Invoke(); break; 
+                case TMP_Dropdown dd: OpenList(dd); break; 
+            }
+        }
+    }
+
+    private void PollKeyInput()
+    {
+        // ensure there is an active keyboard
+        if (Keyboard.current == null) return;
+
+        // move up/down for arrow keys
+        if (Keyboard.current.upArrowKey.wasPressedThisFrame)
+        {
+            _index = (_index + 1 + _items.Count) % _items.Count;
+        } 
+        else if (Keyboard.current.downArrowKey.wasPressedThisFrame)
+        {
+            _index = (_index - 1 + _items.Count) % _items.Count;
+        }
+
+        // if the enter button was pressed, click the button 
+        if (Keyboard.current.enterKey.wasPressedThisFrame && Time.frameCount > _enabledFrame)
         {
             switch (_items[_index])
             {
