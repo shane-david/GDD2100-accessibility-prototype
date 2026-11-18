@@ -221,6 +221,9 @@ public class InputVisualGenerator : IScaleable
             _decoyObject.transform.localScale = _buttonScale; 
         }
 
+        // invoke decoy plop sound 
+        EventHandler.InvokeSoundEvent("plop"); 
+
         // set the var
         _decoySpawned = true; 
     }
@@ -234,6 +237,7 @@ public class InputVisualGenerator : IScaleable
         if (_decoy.inputId == input)
         {   
             _decoyObject.GetComponent<Image>().color = Color.green; 
+            EventHandler.InvokeSoundEvent("good"); 
             Instantiate(_goodInput, _decoyObject.transform);
             Destroy(_decoyObject, 0.2f);
             _decoy = null; 
@@ -268,11 +272,13 @@ public class InputVisualGenerator : IScaleable
             if (collectedInputs[i] != _generatedInputs[i]) {
                 _inputLayout.transform.GetChild(i).GetComponent<Image>().color = new Color(0.0f, 1.0f, 0.0f, 1.0f); 
                 Instantiate(_badInput, _inputLayout.transform.GetChild(i).transform);
+                EventHandler.InvokeSoundEvent("lose"); 
                 EndCatch("lose"); 
                 return; 
             
             // if they are the same make that instance green 
             } else {
+                EventHandler.InvokeSoundEvent("good"); 
                 _inputLayout.transform.GetChild(i).GetComponent<Image>().color = new Color(0.0f, 1.0f, 0.0f, 1.0f); 
                 Instantiate(_goodInput, _inputLayout.transform.GetChild(i).transform);
             }
@@ -280,6 +286,7 @@ public class InputVisualGenerator : IScaleable
 
         // if we made it out of the loop the inputs are an exact match so far and if the sizes are the same the player wins
         if (collectedInputs.Count == _generatedInputs.Count) {
+            EventHandler.InvokeSoundEvent("win"); 
             EndCatch("win"); 
         }
     }
@@ -297,6 +304,9 @@ public class InputVisualGenerator : IScaleable
 
     private void GenerateInputs()
     {   
+        // splash for inputs 
+        EventHandler.InvokeSoundEvent("splash"); 
+        
         // broadcast the tutorial event if the tutorial is active
         if (GameManager.Instance._tutorialActive)
         {

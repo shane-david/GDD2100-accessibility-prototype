@@ -628,9 +628,9 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: f2e746a3d619d864886e8e68d51e10fe, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.509
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1622,6 +1622,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1973277597}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: ClickSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1257955449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2212,8 +2224,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23eb140903de8864198d1699acdc4746, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundManager
-  _audioSource: {fileID: 0}
-  _clips: []
+  _audioSource: {fileID: 1973277598}
+  _backgroundMusic: {fileID: 306605285}
+  _clips:
+  - key: cast
+    value: {fileID: 8300000, guid: e0d7d1e083ef39d408e43f015b922aa1, type: 3}
+  - key: plop
+    value: {fileID: 8300000, guid: 38a6ac6e08bc243439d0eaa6f0bc083c, type: 3}
+  - key: splash
+    value: {fileID: 8300000, guid: 27a223afbc14cc74da6034271f8ffe11, type: 3}
+  - key: click
+    value: {fileID: 8300000, guid: 8db3e6997f8e9874ca0fca55aaa5e7dd, type: 3}
+  - key: lose
+    value: {fileID: 8300000, guid: b886a5f524ca83a4fa0f36d1ef68d320, type: 3}
+  - key: win
+    value: {fileID: 8300000, guid: c522fe7e9514e6747b3eb7c03627ff28, type: 3}
+  - key: good
+    value: {fileID: 8300000, guid: 77e67c3aca9ffd7449b846316823778d, type: 3}
 --- !u!82 &1973277598
 AudioSource:
   m_ObjectHideFlags: 0

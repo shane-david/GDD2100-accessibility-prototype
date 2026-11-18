@@ -18,4 +18,13 @@ public static class EventHandler
     public static void InvokeDifficultyChange() => OnDifficultyChange?.Invoke(); 
 
     public static void InvokeScaleChange(char scale) => OnScaleChange?.Invoke(scale); 
+
+    // --- sound events --- 
+    
+    public static event Action<string> OnSoundEvent; 
+    public static void InvokeSoundEvent(string name) => OnSoundEvent?.Invoke(name);
+    public static event Action<float> OnSFXVolumeChanged;
+    public static void InvokeSFXVolumeChanged(float vol) => OnSFXVolumeChanged?.Invoke(vol);
+    public static event Action<float> OnMusicVolumeChanged;
+    public static void InvokeMusicVolumeChanged(float vol) => OnMusicVolumeChanged?.Invoke(vol);  
 }

@@ -16,6 +16,11 @@ public class OptionsMenuHandler : IScaleable
     [SerializeField] private RectTransform _totalTransform; 
     [SerializeField] private UIControl _startMenu; 
 
+    [Header("Sliders")]
+    [SerializeField] private Slider _musicSlider;
+    [SerializeField] private Slider _sfxSlider;
+    
+
     // make singleton
     public static OptionsMenuHandler Instance { get; private set; }
 
@@ -44,10 +49,10 @@ public class OptionsMenuHandler : IScaleable
     // when the fishing scene is loaded, show the tutorial button 
     private void OnFishingSceneLoaded(Scene scene, LoadSceneMode mode)  
     {
-        if (scene.name == "game")
-        {
-            _tutorialButton.SetActive(true); 
-        }
+        // if (scene.name == "game")
+        // {
+        //     _tutorialButton.SetActive(true); 
+        // }
     }
 
     // subscribe and unsubscribe from the dropdown changed evernts
@@ -56,6 +61,8 @@ public class OptionsMenuHandler : IScaleable
         _peripheralDropdown.onValueChanged.AddListener(ChangePeripheral); 
         _difficultyDropdown.onValueChanged.AddListener(ChangeDifficulty);
         _guiScaleDropdown.onValueChanged.AddListener(ChangeGUIScale);
+        _musicSlider.onValueChanged.AddListener(ChangeMusicVolume);
+        _sfxSlider.onValueChanged.AddListener(ChangeSFXVolume);
     }
 
     private void OnDisable()
@@ -63,6 +70,8 @@ public class OptionsMenuHandler : IScaleable
         _peripheralDropdown.onValueChanged.RemoveListener(ChangePeripheral); 
         _difficultyDropdown.onValueChanged.RemoveListener(ChangeDifficulty);
         _guiScaleDropdown.onValueChanged.RemoveListener(ChangeGUIScale);
+        _musicSlider.onValueChanged.RemoveListener(ChangeMusicVolume);
+        _sfxSlider.onValueChanged.RemoveListener(ChangeSFXVolume);
     }
 
     // destroy option
@@ -127,4 +136,9 @@ public class OptionsMenuHandler : IScaleable
                 break; 
         }
     }
+
+    // music slider changes
+    private void ChangeMusicVolume(float vol) => EventHandler.InvokeMusicVolumeChanged(vol); 
+    private void ChangeSFXVolume(float vol) => EventHandler.InvokeSFXVolumeChanged(vol); 
+
 }

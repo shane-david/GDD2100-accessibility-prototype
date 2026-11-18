@@ -29,6 +29,7 @@ public class CastAnimHandler : MonoBehaviour
             _animator.speed = 3f; 
         } else if (inputType == "released") {   
             _animator.speed = 0f; 
+            EventHandler.InvokeSoundEvent("cast"); 
             StartCoroutine(TransitionDelay(1f));  
         }
     }
